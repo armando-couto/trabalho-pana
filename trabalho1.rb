@@ -55,30 +55,34 @@ class App < JFrame
 
   private
   def initComponents
-    cbox_op1 = JCheckBox.new("f(n) = K")
+    cbox_op1 = JCheckBox.new("f(n)=n")
     cbox_op1.setBounds(83, 7, 97, 23)
-    cbox_op2 = JCheckBox.new("f(n) = n")
+    cbox_op2 = JCheckBox.new("f(n)=n²")
     cbox_op2.setBounds(83, 33, 97, 23)
-    cbox_op3 = JCheckBox.new("f(n) = n²")
+    cbox_op3 = JCheckBox.new("f(n)=2ˆn")
     cbox_op3.setBounds(83, 59, 97, 23)
-    cbox_op4 = JCheckBox.new("f(n) = n³")
+    cbox_op4 = JCheckBox.new("f(n)=nlogn")
     cbox_op4.setBounds(83, 84, 97, 23)
-    cbox_op5 = JCheckBox.new("f(n) = logn")
+    cbox_op5 = JCheckBox.new("f(n)=logn")
     cbox_op5.setBounds(83, 110, 97, 23)
-    cbox_op6 = JCheckBox.new("f(n) = nlogn")
+    cbox_op6 = JCheckBox.new("f(n)=n!")
     cbox_op6.setBounds(83, 136, 97, 23)
-    cbox_op7 = JCheckBox.new("f(n) = 2^n")
+    cbox_op7 = JCheckBox.new("f(n)=1")
     cbox_op7.setBounds(83, 163, 97, 23)
+    cbox_op8 = JCheckBox.new("f(n)=nˆn")
+    cbox_op8.setBounds(83, 193, 97, 23)
+    cbox_op9 = JCheckBox.new("f(n)=loglogn")
+    cbox_op9.setBounds(83, 223, 97, 23)
     textField_n= JTextField.new
     textField_n.setColumns(10)
-    textField_n.setBounds(83, 193, 97, 23)
+    textField_n.setBounds(83, 243, 97, 23)
     btnGerar = JButton.new("MONTAR")
-    btnGerar.setBounds(247, 193, 97, 23)
+    btnGerar.setBounds(247, 243, 97, 23)
 
-    panel_exercicio= mount cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, textField_n, btnGerar
+    panel_exercicio= mount cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, cbox_op8, cbox_op9, textField_n, btnGerar
 
     btnGerar.add_action_listener do |evt|
-      panel_exercicio= mount cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, textField_n, btnGerar
+      panel_exercicio= mount cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, cbox_op8, cbox_op9, textField_n, btnGerar
       self.setContentPane(panel_exercicio)
       self.setVisible(true)
     end
@@ -90,11 +94,11 @@ class App < JFrame
     self.setVisible(true)
   end
 
-  def mount cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, textField_n, btnGerar
-    pieChart= ChartFactory.createXYLineChart("Grafico", "X", "Y", createDataset(cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, textField_n), PlotOrientation::VERTICAL, true, true, false)
+  def mount cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, cbox_op8, cbox_op9, textField_n, btnGerar
+    pieChart= ChartFactory.createXYLineChart("Grafico", "X", "Y", createDataset(cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, cbox_op8, cbox_op9, textField_n), PlotOrientation::VERTICAL, true, true, false)
     chart_panel = ChartPanel.new(pieChart)
-    chart_panel.setBounds(73, 233, 703, 309)
-    chart_panel.setPreferredSize(Dimension.new(400, 400))
+    chart_panel.setBounds(73, 273, 703, 309)
+    chart_panel.setPreferredSize(Dimension.new(500, 500))
 
     panel_exercicio= Panel.new
     panel_exercicio.setLayout(nil)
@@ -107,6 +111,8 @@ class App < JFrame
     panel_exercicio.add(cbox_op5)
     panel_exercicio.add(cbox_op6)
     panel_exercicio.add(cbox_op7)
+    panel_exercicio.add(cbox_op8)
+    panel_exercicio.add(cbox_op9)
     panel_exercicio.add(textField_n)
     panel_exercicio.add(btnGerar)
     panel_exercicio.validate
@@ -114,31 +120,31 @@ class App < JFrame
     panel_exercicio
   end
 
-  def createDataset cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, textField_n
+  def createDataset cbox_op1, cbox_op2, cbox_op3, cbox_op4, cbox_op5, cbox_op6, cbox_op7, cbox_op8, cbox_op9, textField_n
     dataset = XYSeriesCollection.new
     entrada= textField_n.text.to_i
 
     if cbox_op1 != nil && cbox_op1.isSelected
-      op1 = XYSeries.new("f(n)=K")
-      (0 .. entrada).each { |x| op1.add(x, entrada) }
+      op1 = XYSeries.new("f(n)=n")
+      (0 .. entrada).each { |x| op1.add(x, x) }
       dataset.addSeries(op1)
     end
 
     if cbox_op2 != nil && cbox_op2.isSelected
-      op2= XYSeries.new("f(n)=n")
-      (0 .. entrada).each { |x| op2.add(x, x) }
+      op2= XYSeries.new("f(n)=n²")
+      (0 .. entrada).each { |x| op2.add(x, x * x) }
       dataset.addSeries(op2)
     end
 
     if cbox_op3 != nil && cbox_op3.isSelected
-      op3= XYSeries.new("f(n)=n^2")
-      (0 .. entrada).each { |x| op3.add(x, x * x) }
+      op3= XYSeries.new("f(n)=2ˆn")
+      (0 .. entrada).each { |x| op3.add(x, Math.pow(2, x)) }
       dataset.addSeries(op3)
     end
 
     if cbox_op4 != nil && cbox_op4.isSelected
-      op4= XYSeries.new("f(n)=n^3")
-      (0 .. entrada).each { |x| op4.add(x, x * x * x) }
+      op4= XYSeries.new("f(n)=nlogn")
+      (1 .. entrada).each { |x| op4.add(x, x * Math.log10(x)) }
       dataset.addSeries(op4)
     end
 
@@ -149,19 +155,38 @@ class App < JFrame
     end
 
     if cbox_op6 != nil && cbox_op6.isSelected
-      op6 = XYSeries.new("f(n)=nlogn")
-      y= nil
-      (1 .. entrada).each { |x| op6.add(x, x * Math.log10(x)) }
+      op6 = XYSeries.new("f(n)=n!")
+      (1 .. entrada).each { |x| op6.add(x, fatorial(x)) }
       dataset.addSeries(op6)
     end
 
     if cbox_op7 != nil && cbox_op7.isSelected
-      op7 = XYSeries.new("f(n)=2^n")
-      (0 .. entrada).each { |x| op7.add(x, x * Math.pow(2, x)) }
+      op7 = XYSeries.new("f(n)=1")
+      (0 .. entrada).each { |x| op7.add(x, 1) }
       dataset.addSeries(op7)
     end
 
+    if cbox_op8 != nil && cbox_op8.isSelected
+      op8 = XYSeries.new("f(n)=n^n")
+      (0 .. entrada).each { |x| op8.add(x, Math.pow(x, x)) }
+      dataset.addSeries(op8)
+    end
+
+    if cbox_op9 != nil && cbox_op9.isSelected
+      op9 = XYSeries.new("f(n)=loglogn")
+      (1 .. entrada).each { |x| op9.add(x, Math.log10(Math.log10(x))) }
+      dataset.addSeries(op9)
+    end
+
     dataset
+  end
+
+  def fatorial n
+    if n > 1
+      return n * fatorial(n-1)
+    else
+      return 1
+    end
   end
 end
 
