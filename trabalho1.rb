@@ -174,7 +174,7 @@ class App < JFrame
 
     if cbox_op9 != nil && cbox_op9.isSelected
       op9 = XYSeries.new("f(n)=loglogn")
-      (1 .. entrada).each { |x| op9.add(x, Math.log10(Math.log10(x))) }
+      (2 .. entrada).each { |x| op9.add(x, Math.log(Math.log(x))) }
       dataset.addSeries(op9)
     end
 
